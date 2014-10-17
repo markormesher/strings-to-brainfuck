@@ -1,6 +1,21 @@
 import sys
 
 
+def get_value_change_string(value):
+	output = ""
+
+	# inefficient right now
+	if (value > 0):
+		for i in range(0, value):
+			output += "+"
+	elif (value < 0):
+		for i in range(0, (value * -1)):
+			output += "-"
+
+	# finish
+	return output
+
+
 def translate(input):
 	output = ""
 	characters = list(input)
@@ -14,13 +29,8 @@ def translate(input):
 		# work out how far we need to move from the current value
 		difference = required_char_val - current_cell_value
 
-		# apply the necessary changes (very, very inefficiently)
-		if (difference > 0):
-			for i in range(0, difference):
-				output += "+"
-		elif (difference < 0):
-			for i in range(0, (difference * -1)):
-				output += "-"
+		# apply the necessary changes
+		output += get_value_change_string(difference)
 
 		# print the character and update our memory of the current cell value
 		output += "."
