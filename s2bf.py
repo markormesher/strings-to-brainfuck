@@ -9,10 +9,10 @@ def translate(input):
 	# loop all characters
 	for c in characters:
 		# find the ASCII value for this colour
-		char_val = ord(c)
+		required_char_val = ord(c)
 
 		# work out how far we need to move from the current value
-		difference = char_val - cell_value
+		difference = required_char_val - current_cell_value
 
 		# apply the necessary changes (very, very inefficiently)
 		if (difference > 0):
@@ -24,7 +24,7 @@ def translate(input):
 
 		# print the character and update our memory of the current cell value
 		output += "."
-		cell_value = char_val
+		current_cell_value = required_char_val
 
 	# return the BF
 	return output
