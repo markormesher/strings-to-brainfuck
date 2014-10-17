@@ -1,3 +1,6 @@
+import sys
+
+
 def translate(input):
 	output = ""
 	characters = list(input)
