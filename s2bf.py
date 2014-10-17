@@ -1,39 +1,46 @@
 import sys
 
 
-def get_value_change_string(value):
-	output = ""
+current_cell_value = 0
+current_cell = 0
+output = ""
+
+
+def get_cell_move_string(moveTo):
+	pass
+
+
+def change_value(changeTo):
+	global current_cell_value, output
+
+	# how far to move?
+	difference = changeTo - current_cell_value
 
 	# inefficient right now
-	if (value > 0):
-		for i in range(0, value):
+	if (difference > 0):
+		for i in range(0, difference):
 			output += "+"
-	elif (value < 0):
-		for i in range(0, (value * -1)):
+	elif (difference < 0):
+		for i in range(0, (difference * -1)):
 			output += "-"
-
-	# finish
-	return output
 
 
 def translate(input):
-	output = ""
-	characters = list(input)
-	current_cell_value = 0
+	global current_cell_value, output
 
 	# loop all characters
+	characters = list(input)
 	for c in characters:
 		# find the ASCII value for this colour
 		required_char_val = ord(c)
 
-		# work out how far we need to move from the current value
-		difference = required_char_val - current_cell_value
-
 		# apply the necessary changes
-		output += get_value_change_string(difference)
+		change_value(required_char_val)
 
-		# print the character and update our memory of the current cell value
+		# print the character
 		output += "."
+
+		# update our memory of the current cell value
 		current_cell_value = required_char_val
 
 	# return the BF
