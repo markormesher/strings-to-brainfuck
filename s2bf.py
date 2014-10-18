@@ -39,17 +39,31 @@ def change_value(changeTo):
 		pass
 	elif (difference > 0):
 		moveChar = "+"
+		oppMoveChar = "-"
 	else:
 		difference = difference * -1
 		moveChar = "-"
+		oppMoveChar = "+"
 
 	# pick which method to use
 	if (difference >= 16):
-		# use a loop to change by the biggest square number smaller than the target, then adjust
+		# use a loop to change by the closest square number, then compensate
+
+		# square above or square below?
+		root = math.sqrt(difference)
+		prevRoot = int(root)
+		nextRoot = int(root) + 1
+		diffToPrevRoot = difference - (prevRoot * prevRoot)
+		diffToNextRoot = (nextRoot * nextRoot) - difference
+		if (diffToPrevRoot < diffToNextRoot):
+			root = prevRoot
+			adjustChar = moveChar
+		else:
+			root = nextRoot
+			adjustChar = oppMoveChar
 
 		# move into the loop counter and set it up
 		move_to_cell(COUNTER_CELL)
-		root = int(math.floor(math.sqrt(difference)))
 		for i in range(0, root):
 			output += "+"
 
@@ -64,8 +78,13 @@ def change_value(changeTo):
 
 		# add on anything missed in the loop
 		extra = difference - (root * root)
-		for i in range(0, extra):
-			output += moveChar
+		if (extra > 0):
+			for i in range(0, extra):
+				output += adjustChar
+		elif (extra < 0):
+			for i in range(0, (extra * -1)):
+				output += adjustChar
+
 	else:
 		# inefficient linear method
 		for i in range(0, difference):
